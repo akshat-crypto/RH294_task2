@@ -1,0 +1,19 @@
+---
+# tasks file for ec2oslaunch
+
+- name: OS provisioning
+  ec2:
+          key_name: "ukey1"
+          instance_type: "t2.micro"
+          image: "ami-0b5bff6d9495eff69"
+          instance_tags:
+                  Name: Ansible_task2
+          wait: yes
+          count: 1
+          vpc_subnet_id: "subnet-57dfe53f"
+          assign_public_ip: yes
+          state: present
+          region: "ap-south-1"
+          group_id: "sg-0cddfecf9eb667249"
+          aws_access_key: "{{ user }}"
+          aws_secret_key: "{{ passwd }}"

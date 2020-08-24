@@ -1,0 +1,32 @@
+---
+# tasks file for apacheconfig
+- name: installing the httpd package
+  package:
+          name: "httpd"
+          state: present
+  register: pack
+ 
+- name: Create a new document root folder
+  file:
+          state: directory
+          dest: "{{ rootdocument }}"
+  register: dir
+
+- name: Changing the port and document folder
+  template:
+          dest: /etc/httpd/conf.d/task2.conf
+          src: templates/servconfig.conf.j2
+  when: pack.rc == 0
+  notify: httpd start 
+ 
+- name: Downloading the code from github
+  get_url:
+          dest: "{{ rootdocument }}"
+          url: "https://raw.githubusercontent.com/akshat-crypto/RH294_task2/master/index.html"
+  when: dir.failed == false
+
+- name: starting the httpd services
+  service:
+          name: "httpd"
+          state: started
+

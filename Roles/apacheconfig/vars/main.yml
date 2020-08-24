@@ -1,0 +1,4 @@
+---
+# vars file for apacheconfig
+rootdocument: "/var/www/task2"
+httpport: 3000
